@@ -5,6 +5,10 @@ import type { NextAuthConfig } from "next-auth"
 export const config = {
   providers: [GitHub],
   basePath: "/auth",
+  trustHost: true,
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
     jwt({ token, session, user, trigger }) {
       if (trigger === "update") token.name = session.user.name
@@ -21,12 +25,8 @@ export const config = {
       return token
     },
     session: async ({ session, token }) => {
-      return {
-        ...session,
-        user: {
-          ...token,
-        },
-      }
+      session.user = token
+      return session
     },
     authorized: ({ auth }) => {
       const isLoggedIn = !!auth?.user

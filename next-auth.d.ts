@@ -1,20 +1,17 @@
-import { DefaultUser, DefaultSession } from "next-auth"
+import "next-auth"
 
 type SessionUser = {
   isAdmin: boolean
 }
 
-declare module "@auth/core/jwt" {
+declare module "next-auth/jwt" {
   interface JWT extends SessionUser {}
 }
 
-declare module "@auth/core" {
-  interface Session {
-    user: SessionUser & DefaultSession["user"]
-  }
-
-  interface User extends DefaultUser, SessionUser {}
+declare module "next-auth" {
+  interface User extends SessionUser {}
 }
+
 declare module "@auth/core/adapters" {
   interface AdapterUser extends SessionUser {}
 }
