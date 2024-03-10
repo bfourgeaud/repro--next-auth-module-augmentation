@@ -1,6 +1,8 @@
-import "next-auth"
+import type { JWT } from "next-auth/jwt"
+import type { User } from "next-auth"
+import type { AdapterUser } from "@auth/core/adapters"
 
-type SessionUser = {
+interface SessionUser {
   isAdmin: boolean
 }
 
